@@ -74,71 +74,94 @@ export default function TechStack() {
       const intro = section.querySelector("[data-intro]")
 
       /*
-       * Section introduction.
+       * HEADER
        */
+
       gsap.from([heading, intro], {
-        y: 80,
+        y: 50,
         opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: "power4.out",
+        duration: 0.7,
+        stagger: 0.08,
+        ease: "power3.out",
+
         scrollTrigger: {
           trigger: section,
-          start: "top 75%",
-          toggleActions: "play none none reverse",
+          start: "top 80%",
+          once: true,
         },
       })
 
       /*
-       * Horizontal movement.
-       *
-       * Each technology row moves in a
-       * different direction.
+       * TECHNOLOGY ROWS
        */
+
       rows.forEach((row) => {
+        const tools = row.querySelector("[data-tools]") as HTMLElement | null
+
+        if (!tools) return
+
         const direction = Number(row.dataset.direction)
 
+        /*
+         * Start badges in a visible position.
+         *
+         * This is deliberately NOT a huge xPercent.
+         */
+
+        gsap.set(tools, {
+          x: direction === 1 ? -30 : 30,
+        })
+
+        /*
+         * Horizontal movement while scrolling.
+         */
+
+        gsap.to(tools, {
+          x: direction === 1 ? 30 : -30,
+          ease: "none",
+
+          scrollTrigger: {
+            trigger: row,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        })
+
+        /*
+         * Badge entrance.
+         */
+
+        const badges = gsap.utils.toArray<HTMLElement>(
+          row.querySelectorAll("[data-tool]")
+        )
+
         gsap.fromTo(
-          row,
+          badges,
           {
-            xPercent: direction * -8,
+            opacity: 0,
+            y: 20,
+            scale: 0.95,
           },
           {
-            xPercent: direction * 8,
-            ease: "none",
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.45,
+            stagger: 0.035,
+            ease: "power3.out",
+
             scrollTrigger: {
-              trigger: section,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
+              trigger: row,
+              start: "top 90%",
+              once: true,
             },
           }
         )
       })
 
-      /*
-       * Individual technology badges.
-       */
-      const badges = gsap.utils.toArray<HTMLElement>(
-        section.querySelectorAll("[data-tool]")
-      )
-
-      gsap.from(badges, {
-        y: 40,
-        opacity: 0,
-        scale: 0.9,
-        duration: 0.7,
-        stagger: {
-          each: 0.03,
-          from: "random",
-        },
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 60%",
-          toggleActions: "play none none reverse",
-        },
-      })
+      ScrollTrigger.refresh()
     }, section)
 
     return () => ctx.revert()
@@ -149,9 +172,11 @@ export default function TechStack() {
       ref={sectionRef}
       className="relative overflow-hidden bg-muted/30 py-28 md:py-40"
     >
-      {/* Header */}
+      {/* =================================================
+          HEADER
+      ================================================= */}
 
-      <div className="mx-auto mb-20 max-w-7xl px-6 md:px-10 lg:px-16">
+      <div className="mx-auto mb-16 max-w-7xl px-6 md:mb-20 md:px-10 lg:px-16">
         <div className="max-w-4xl">
           <p className="mb-6 text-[10px] font-medium tracking-[0.3em] text-muted-foreground uppercase">
             07 — Technology
@@ -183,10 +208,12 @@ export default function TechStack() {
         </div>
       </div>
 
-      {/* Technology rows */}
+      {/* =================================================
+          TECHNOLOGY ROWS
+      ================================================= */}
 
       <div className="space-y-4 md:space-y-6">
-        {stacks.map((stack, index) => {
+        {stacks.map((stack) => {
           const Icon = stack.icon
 
           return (
@@ -194,58 +221,64 @@ export default function TechStack() {
               key={stack.title}
               data-row
               data-direction={stack.direction}
-              className="relative flex w-[115%] items-center gap-4 border-y border-border bg-background px-6 py-5 md:w-[110%] md:px-10 md:py-7 lg:px-16"
-              style={{
-                marginLeft: index % 2 === 0 ? "-5%" : "-5%",
-              }}
+              className="relative flex w-full border-y border-border bg-background"
             >
-              {/* Category */}
+              {/* CATEGORY */}
+              <div className="relative z-20 flex w-27.5 shrink-0 items-center gap-2 bg-background px-4 py-5 md:w-47.5 md:gap-3 md:px-10 md:py-7 lg:w-57.5 lg:px-16">
+                <Icon className="size-4 shrink-0 text-muted-foreground md:size-6" />
 
-              <div className="flex shrink-0 items-center gap-3 pr-6 md:pr-10">
-                <Icon className="size-5 text-muted-foreground md:size-6" />
-
-                <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground md:text-sm">
+                <span className="text-[9px] font-medium tracking-[0.14em] text-muted-foreground md:text-sm md:tracking-[0.2em]">
                   {stack.title}
                 </span>
               </div>
 
-              {/* Technologies */}
+              {/* TOOLS VIEWPORT */}
+              <div
+                data-tools-viewport
+                className="relative min-w-0 flex-1 overflow-hidden"
+              >
+                {/* MOVING TOOLS */}
+                <div
+                  data-tools
+                  className="flex w-max items-center gap-2 py-5 pr-6 md:gap-3 md:py-7 md:pr-10"
+                >
+                  {stack.tools.map((tool) => (
+                    <Badge
+                      key={tool}
+                      data-tool
+                      variant="outline"
+                      className="shrink-0 rounded-none border-border bg-transparent px-3 py-2 text-[9px] font-medium tracking-widest whitespace-nowrap text-foreground uppercase md:px-4 md:text-xs md:tracking-[0.15em]"
+                    >
+                      {tool}
+                    </Badge>
+                  ))}
 
-              <div className="flex min-w-max items-center gap-2 md:gap-3">
-                {stack.tools.map((tool) => (
-                  <Badge
-                    key={tool}
-                    data-tool
-                    variant="outline"
-                    className="rounded-none border-border bg-transparent px-3 py-2 text-[10px] font-medium tracking-[0.15em] text-foreground uppercase md:px-4 md:text-xs"
-                  >
-                    {tool}
-                  </Badge>
-                ))}
-
-                {/* Repeat first few badges for visual continuation */}
-
-                {stack.tools.slice(0, 3).map((tool) => (
-                  <Badge
-                    key={`${tool}-repeat`}
-                    variant="outline"
-                    className="rounded-none border-border/60 bg-transparent px-3 py-2 text-[10px] font-medium tracking-[0.15em] text-muted-foreground uppercase md:px-4 md:text-xs"
-                  >
-                    {tool}
-                  </Badge>
-                ))}
+                  {stack.tools.slice(0, 4).map((tool) => (
+                    <Badge
+                      key={`${tool}-repeat`}
+                      data-tool
+                      variant="outline"
+                      className="shrink-0 rounded-none border-border/60 bg-transparent px-3 py-2 text-[9px] font-medium tracking-widest whitespace-nowrap text-muted-foreground uppercase md:px-4 md:text-xs md:tracking-[0.15em]"
+                    >
+                      {tool}
+                    </Badge>
+                  ))}
+                </div>
               </div>
             </div>
           )
         })}
       </div>
 
-      {/* Bottom statement */}
+      {/* =================================================
+          BOTTOM STATEMENT
+      ================================================= */}
 
       <div className="mx-auto mt-28 max-w-7xl px-6 md:mt-40 md:px-10 lg:px-16">
         <div className="grid gap-10 border-t border-border pt-8 md:grid-cols-[0.5fr_1fr]">
           <div className="flex items-center gap-3 text-muted-foreground">
             <Terminal className="size-5" />
+
             <span className="text-xs tracking-[0.25em] uppercase">
               The stack keeps evolving
             </span>
@@ -259,7 +292,9 @@ export default function TechStack() {
         </div>
       </div>
 
-      {/* Decorative background */}
+      {/* =================================================
+          DECORATIVE BACKGROUND
+      ================================================= */}
 
       <div className="pointer-events-none absolute top-[40%] left-1/2 -z-10 -translate-x-1/2 whitespace-nowrap select-none">
         <Braces className="size-[80vw] text-foreground/2.5" />

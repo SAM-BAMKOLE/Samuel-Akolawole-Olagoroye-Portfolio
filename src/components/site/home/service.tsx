@@ -132,7 +132,7 @@ export default function CarouselSection() {
         </div>
 
         {/* RIGHT */}
-        <div className="relative order-2 aspect-4/3 w-full overflow-hidden bg-gray-300 lg:aspect-625/528">
+        <div className="relative order-2 aspect-3/4 w-full overflow-hidden bg-gray-300 lg:aspect-528/625">
           {slides.map((slide, index) => (
             <Image
               key={slide.image}

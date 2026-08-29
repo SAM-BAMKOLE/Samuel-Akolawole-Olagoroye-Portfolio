@@ -3,22 +3,19 @@ export const slides = [
     title: "Thoughtful Process",
     description:
       "Every project starts with listening. I dig into your goals, audience, and constraints before a single pixel is pushed.",
-    image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=600&fit=crop&crop=center&auto=format",
+    image: "/images/person_1.jpg",
   },
   {
     title: "Craft + Strategy",
     description:
       "Beautiful design only works when it’s backed by clear thinking. I bring both so your work looks good and performs well.",
-    image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=600&fit=crop&crop=center&auto=format",
+    image: "/images/person_2.jpg",
   },
   {
     title: "Genuine Collaboration",
     description:
       "You’re not just a client—you’re a partner. I keep the door open, share ideas freely, and celebrate the wins with you.",
-    image:
-      "https://images.unsplash.com/photo-1773332611514-238856b76198?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/images/person_3.jpg",
   },
 ]
 
