@@ -13,11 +13,13 @@ import SelectedProjects from "@/components/site/home/seletedProjects"
 import Service from "@/components/site/home/service"
 import Skills from "@/components/site/home/skills"
 import TechStack from "@/components/site/home/techStack"
+import Navbar from "@/components/site/navbar"
 import { Button } from "@/components/ui/button"
 
 export default function Page() {
   return (
     <>
+      <Navbar />
       <Hero />
       <About />
       <Service />
