@@ -1,0 +1,43 @@
+---
+import { hero, profile } from "@/data/content";
+import { buttonVariants } from "@/components/ui/button";
+import RollText from "@/components/ui/RollText.astro";
+import { ArrowDown, Download } from "lucide-react";
+---
+
+<section id="top" data-liquid-zone class="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pb-10 pt-32 md:pb-14">
+  <div class="wrap relative z-10">
+    <p data-hero-in class="eyebrow mb-8 flex items-center gap-3">
+      <span class="dot-live"></span>{hero.eyebrow}
+    </p>
+
+    <h1 data-hero-title class="display h-xl max-w-[16ch] text-balance">{hero.title}</h1>
+
+    <div class="mt-12 grid items-end gap-10 md:mt-16 md:grid-cols-12">
+      <p data-hero-in class="max-w-md text-lg font-medium leading-snug text-ink/85 md:col-span-4 md:text-xl">
+        {hero.sub}
+      </p>
+
+      <div data-hero-in class="flex flex-wrap items-center gap-3 md:col-span-4 md:justify-center">
+        <a href="#work" data-magnetic class={buttonVariants({ size: "lg" })}><RollText text="See my work" /></a>
+        <a href={profile.cv} download data-magnetic class={buttonVariants({ size: "lg", variant: "outline" })}><RollText text="Download CV" /><Download /></a>
+      </div>
+
+      <a href="#statement" data-hero-in class="eyebrow flex items-center gap-2 md:col-span-4 md:justify-end">
+        Scroll <ArrowDown className="size-3.5 animate-bounce" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Floating photo cards (reference-style overlapping tilted images) -->
+  <div class="pointer-events-none absolute right-[var(--gutter)] top-28 hidden w-[min(26vw,380px)] lg:block" aria-hidden="true">
+    {hero.images.map((im, i) => (
+      <img
+        src={im.src}
+        alt={im.alt}
+        loading="eager"
+        class={`hero-img absolute aspect-[4/5] w-[78%] rounded-2xl object-cover shadow-2xl ${i === 0 ? "right-0 top-0" : "right-[28%] top-[34%]"}`}
+      />
+    ))}
+  </div>
+</section>

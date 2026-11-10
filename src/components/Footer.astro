@@ -1,0 +1,74 @@
+---
+import { profile } from "@/data/content";
+import { privacy } from "@/data/privacy";
+import { PrivacyDialog } from "./PrivacyDialog";
+import RollText from "@/components/ui/RollText.astro";
+import { ArrowUpRight, ArrowUp, ArrowDown } from "lucide-react";
+
+const nav = [
+  { href: "#work", label: "Projects" },
+  { href: "#services", label: "Services" },
+  { href: "#experience", label: "Experience" },
+];
+const big = "text-[clamp(1.6rem,2.7vw,2.7rem)] font-medium leading-[1.12] tracking-[-0.035em]";
+---
+
+<footer class="relative overflow-x-clip bg-paper text-ink">
+  <div class="wrap pt-14 md:pt-16">
+    <!-- link columns -->
+    <div class="grid gap-12 md:grid-cols-12">
+      <nav class="md:col-span-6" aria-label="Footer">
+        <p class="eyebrow mb-10 md:mb-14">Navigation</p>
+        <ul class={big}>
+          {nav.map((l) => <li><a href={l.href}><RollText text={l.label} /></a></li>)}
+        </ul>
+        <a href="#top" class={`${big} mt-10 inline-flex items-center gap-2`}>
+          <RollText text="Back to top" /><ArrowUp className="size-[0.8em]" strokeWidth={1.75} />
+        </a>
+      </nav>
+
+      <div class="md:col-span-3">
+        <p class="eyebrow mb-10 md:mb-14">Social</p>
+        <ul class={big}>
+          <li>
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2">
+              <RollText text="LinkedIn" /><ArrowUpRight className="size-[0.8em]" strokeWidth={1.75} />
+            </a>
+          </li>
+          <li>
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2">
+              <RollText text="GitHub" /><ArrowUpRight className="size-[0.8em]" strokeWidth={1.75} />
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-3">
+        <p class="eyebrow mb-10 md:mb-14">Contact</p>
+        <a href={`mailto:${profile.email}?subject=Project%20enquiry`} class={`${big} inline-flex items-center gap-2`}>
+          <RollText text="Email me" /><ArrowUpRight className="size-[0.8em]" strokeWidth={1.75} />
+        </a>
+        <a href={profile.cv} download class={`${big} mt-1 flex items-center gap-2`}>
+          <RollText text="Download CV" /><ArrowDown className="size-[0.8em]" strokeWidth={1.75} />
+        </a>
+      </div>
+    </div>
+
+    <!-- legal row -->
+    <div class="mt-24 grid grid-cols-2 items-center gap-y-3 border-b border-line pb-5 md:mt-32 md:grid-cols-12">
+      <p class="eyebrow md:col-span-6">©{profile.year} {profile.name}</p>
+      <div class="md:col-span-3"><PrivacyDialog client:load title={privacy.title} updated={privacy.updated} sections={privacy.sections} /></div>
+      <p class="eyebrow col-span-2 md:col-span-3 md:text-right">Nigeria / UK</p>
+    </div>
+
+    <!-- giant name: fit to width by JS, letters slide in from both sides -->
+    <div class="footer-name-box pb-[2.2vw] pt-[2vw]">
+      <h2
+        data-footer-name
+        aria-label={profile.name.toLowerCase()}
+        class="inline-block select-none whitespace-nowrap font-bold leading-[0.95] tracking-[-0.065em]"
+        style="font-size: 12.4vw"
+      >{profile.name.toLowerCase()}</h2>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,16 @@
+---
+import { faqs } from "@/data/content";
+import { Faq } from "./Faq";
+---
+
+<section id="faq" class="section-y bg-paper pt-0">
+  <div class="wrap grid gap-12 md:grid-cols-12">
+    <div class="md:col-span-4">
+      <p class="eyebrow mb-6" data-reveal>FAQ</p>
+      <h2 data-lines class="display h-lg">Common <span class="serif-i">questions</span>.</h2>
+    </div>
+    <div class="md:col-span-8" data-reveal>
+      <Faq client:visible items={faqs.map(({ q, a }) => ({ q, a }))} />
+    </div>
+  </div>
+</section>

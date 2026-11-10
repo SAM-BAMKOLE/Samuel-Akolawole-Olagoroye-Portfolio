@@ -1,0 +1,39 @@
+---
+import { profile } from "@/data/content";
+import RollText from "@/components/ui/RollText.astro";
+import { Download } from "lucide-react";
+
+const links = [
+  { href: "#work", label: "Work" },
+  { href: "#services", label: "Services" },
+  { href: "#experience", label: "Experience" },
+  { href: "#faq", label: "FAQ" },
+];
+---
+
+<header class="site-header fixed inset-x-0 top-0 z-50 text-white mix-blend-difference">
+  <div class="wrap flex h-20 items-center justify-between">
+    <a href="#top" class="text-lg font-medium tracking-tight" aria-label="Back to top">
+      <RollText text={profile.name} />
+    </a>
+
+    <nav class="hidden items-center gap-10 text-[0.95rem] md:flex" aria-label="Primary">
+      {links.map((l) => (
+        <a href={l.href}><RollText text={l.label} /></a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-6">
+      <a href={profile.cv} download class="hidden text-[0.95rem] md:inline-flex md:items-center md:gap-1.5" aria-label="Download CV (PDF)">
+        <RollText text="CV" /><Download className="size-3.5" />
+      </a>
+      <a
+        href="#contact"
+        data-magnetic
+        class="rounded-full border border-white/70 px-5 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-black"
+      >
+        <RollText text="Let's talk" />
+      </a>
+    </div>
+  </div>
+</header>

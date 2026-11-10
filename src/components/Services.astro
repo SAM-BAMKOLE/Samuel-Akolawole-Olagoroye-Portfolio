@@ -1,0 +1,39 @@
+---
+import { services } from "@/data/content";
+---
+
+<section id="services" class="section-y bg-paper pt-0">
+  <div class="wrap">
+    <div class="mb-16 grid gap-8 md:mb-24 md:grid-cols-12">
+      <p class="eyebrow md:col-span-3" data-reveal>What I can help with</p>
+      <h2 data-lines class="display h-lg md:col-span-9">
+        One developer from idea to <span class="serif-i">production</span>.
+      </h2>
+    </div>
+
+    <div class="relative">
+      {services.map((s, i) => (
+        <article
+          class="stack-card sticky mb-6 grid overflow-hidden rounded-3xl bg-ink text-paper shadow-xl md:grid-cols-2"
+          style={`top: calc(5.5rem + ${i * 1.1}rem)`}
+        >
+          <div class="flex flex-col justify-between gap-10 p-8 md:p-14">
+            <div>
+              <p class="eyebrow !text-paper/50">{String(i + 1).padStart(2, "0")} / {String(services.length).padStart(2, "0")}</p>
+              <h3 class="display h-md mt-5">{s.title}</h3>
+              <p class="mt-6 max-w-md text-paper/70 md:text-lg">{s.text}</p>
+            </div>
+            <ul class="space-y-3 border-t border-paper/15 pt-6 text-sm md:text-base">
+              {s.points.map((pt) => (
+                <li class="flex items-center gap-3"><span class="size-1.5 rounded-full bg-brand"></span>{pt}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="relative min-h-[260px] md:min-h-[460px]">
+            <img src={s.image} alt={s.title} loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

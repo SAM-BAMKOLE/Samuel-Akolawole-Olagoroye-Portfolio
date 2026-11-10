@@ -1,0 +1,21 @@
+---
+import { statement, stats } from "@/data/content";
+---
+
+<section id="statement" class="section-y bg-paper">
+  <div class="wrap">
+    <p class="eyebrow mb-10" data-reveal>Approach</p>
+    <p data-scrub class="display h-md max-w-[24ch] !leading-[1.12] md:max-w-[28ch]">{statement}</p>
+
+    <dl class="mt-24 grid grid-cols-2 gap-x-6 gap-y-14 border-t border-line pt-14 md:mt-36 md:grid-cols-4">
+      {stats.map((s) => (
+        <div data-reveal>
+          <dt class="display h-lg flex items-baseline">
+            <span data-count={s.value}>0</span><span class="serif-i text-brand">{s.suffix}</span>
+          </dt>
+          <dd class="mt-3 max-w-[22ch] text-sm text-muted-foreground md:text-base">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+---
+import { profile } from "@/data/content";
+import { buttonVariants } from "@/components/ui/button";
+import RollText from "@/components/ui/RollText.astro";
+import { ContactForm } from "./ContactForm";
+import { Download } from "lucide-react";
+---
+
+<section id="contact" data-liquid-zone class="relative py-[var(--section-y)] text-ink">
+  <div class="wrap grid gap-16 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-6">
+      <p class="eyebrow mb-8 !text-current opacity-60" data-reveal>Contact</p>
+      <h2 data-lines class="display h-lg max-w-[12ch]">
+        Let's build something that <span class="serif-i text-brand">works</span>.
+      </h2>
+
+      <p class="mt-8 max-w-md text-lg leading-snug opacity-75 md:text-xl" data-reveal>
+        Have a project, a role or just a question? Send a message and I'll get back to you personally.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-4" data-reveal>
+        <a href={profile.cv} download data-magnetic class={buttonVariants({ size: "lg", variant: "light" })}>
+          <RollText text="Download CV" /><Download />
+        </a>
+      </div>
+
+      <div class="mt-14 space-y-2" data-reveal>
+        <p class="eyebrow !text-current opacity-60">Prefer email?</p>
+        <a
+          href={`mailto:${profile.email}`}
+          class="u-line inline-block break-all text-[clamp(1.05rem,2vw,1.6rem)] font-medium tracking-tight"
+        >{profile.email}</a>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6" data-reveal>
+      <div class="rounded-3xl border border-current/15 bg-white/10 p-7 backdrop-blur-xl md:p-10">
+        <ContactForm client:visible email={profile.email} />
+      </div>
+    </div>
+  </div>
+</section>

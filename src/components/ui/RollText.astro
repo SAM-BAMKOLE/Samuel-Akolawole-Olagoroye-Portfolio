@@ -1,0 +1,11 @@
+---
+/**
+ * Text "roll" hover: label slides up, an identical copy slides in from below.
+ * Native Astro component (a React one receives slot children as an object,
+ * which printed "[object Object]" in the hover copy).
+ * Usage: <RollText text="Projects" />
+ */
+interface Props { text: string }
+const { text } = Astro.props;
+---
+<span class="roll" data-text={text}><span>{text}</span></span>

@@ -1,0 +1,24 @@
+---
+import { stack } from "@/data/content";
+---
+
+<section aria-label="Tech stack" class="overflow-hidden border-y border-line bg-paper py-10 md:py-14">
+  <div class="space-y-4 md:space-y-6">
+    {stack.map((row) => (
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          {[0, 1].map(() => (
+            <ul class="flex shrink-0 items-center">
+              {row.map((t) => (
+                <li class="display h-lg flex items-center whitespace-nowrap px-6 md:px-10">
+                  {t}<span class="serif-i ml-12 text-brand md:ml-20">✦</span>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+  <p class="sr-only">{stack.flat().join(", ")}</p>
+</section>

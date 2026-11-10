@@ -1,0 +1,37 @@
+---
+import { experience, profile } from "@/data/content";
+import { buttonVariants } from "@/components/ui/button";
+import RollText from "@/components/ui/RollText.astro";
+import { Download } from "lucide-react";
+---
+
+<section id="experience" class="section-y bg-paper">
+  <div class="wrap">
+    <div class="mb-16 grid gap-8 md:mb-24 md:grid-cols-12">
+      <p class="eyebrow md:col-span-3" data-reveal>Experience</p>
+      <h2 data-lines class="display h-lg md:col-span-9">Where I've been <span class="serif-i">shipping</span>.</h2>
+    </div>
+
+    <div class="focus-list border-t border-line">
+      {experience.map((e) => (
+        <div class="grid gap-6 border-b border-line py-12 md:grid-cols-12 md:py-16" data-reveal>
+          <p class="eyebrow md:col-span-3">{e.period}</p>
+          <div class="md:col-span-4">
+            <h3 class="display h-md">{e.role}</h3>
+            <p class="mt-2 text-muted-foreground">{e.company}</p>
+          </div>
+          <ul class="space-y-4 md:col-span-5">
+            {e.points.map((pt) => (
+              <li class="flex gap-3 leading-relaxed text-foreground/80"><span class="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand"></span>{pt}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-14 flex flex-wrap items-center gap-5" data-reveal>
+      <a href={profile.cv} download data-magnetic class={buttonVariants({ size: "lg" })}><RollText text="Download full CV" /><Download /></a>
+      <p class="eyebrow">PDF · Fullstack Developer</p>
+    </div>
+  </div>
+</section>

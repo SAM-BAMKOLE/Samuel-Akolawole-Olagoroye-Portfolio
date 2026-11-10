@@ -1,0 +1,45 @@
+---
+import { projects } from "@/data/content";
+import { ArrowUpRight } from "lucide-react";
+---
+
+<section id="work" class="section-y bg-paper">
+  <div class="wrap">
+    <div class="mb-16 flex flex-col justify-between gap-6 md:mb-24 md:flex-row md:items-end">
+      <h2 data-lines class="display h-lg max-w-[12ch]">Recent <span class="serif-i">work</span></h2>
+      <p class="eyebrow" data-reveal>Selected projects — {String(projects.length).padStart(2, "0")}</p>
+    </div>
+
+    <div class="grid gap-x-8 gap-y-20 md:grid-cols-2 md:gap-y-32">
+      {projects.map((p, i) => (
+        <article class:list={["project group", i % 2 === 1 && "md:mt-40"]}>
+          <a
+            href={p.href}
+            target={p.href.startsWith("http") ? "_blank" : undefined}
+            rel="noopener noreferrer"
+            data-cursor="View"
+            class="block"
+            aria-label={`${p.title} — ${p.kind}`}
+          >
+            <div class="project-media relative aspect-[4/3] overflow-hidden rounded-2xl bg-sand">
+              <img src={p.image} alt={p.title} loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+            </div>
+          </a>
+
+          <div class="project-meta mt-6 grid grid-cols-[auto_1fr_auto] items-start gap-x-5">
+            <span class="eyebrow pt-2">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <h3 data-roll-chars class="display h-md">{p.title}</h3>
+              <p class="eyebrow mt-2">{p.kind}</p>
+              <p class="mt-4 max-w-md text-muted-foreground">{p.description}</p>
+              <ul class="mt-5 flex flex-wrap gap-2">
+                {p.tags.map((t) => <li class="pill">{t}</li>)}
+              </ul>
+            </div>
+            <ArrowUpRight className="mt-2 size-6 transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1" />
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

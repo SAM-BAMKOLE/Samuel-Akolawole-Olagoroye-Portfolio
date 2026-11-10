@@ -1,0 +1,50 @@
+---
+import "@/styles/global.css";
+import { profile } from "@/data/content";
+
+interface Props { title?: string; description?: string }
+const {
+  title = `${profile.name} — ${profile.role}`,
+  description = "Fullstack developer building fast, reliable web platforms with React, Next.js, NestJS, PostgreSQL and AWS.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="theme-color" content="#f2f0eb" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23111110'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='%23ff5a1f' font-family='sans-serif' font-weight='700'>S</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="grain">
+    <!-- Liquid WebGL background (fixed; sections that want it stay transparent) -->
+    <canvas id="liquid" class="fixed inset-0 -z-10 h-full w-full" aria-hidden="true"></canvas>
+    <div id="progress" class="fixed left-0 top-0 z-[80] h-[3px] w-full origin-left scale-x-0 bg-brand"></div>
+
+    <div class="loader fixed inset-0 z-[95] grid place-items-center bg-ink text-paper" aria-hidden="true">
+      <div class="loader-inner flex w-full max-w-[1680px] items-end justify-between px-[var(--gutter)]">
+        <p class="eyebrow !text-paper/60">{profile.name} — Portfolio {profile.year}</p>
+        <p class="loader-count display text-[clamp(5rem,16vw,14rem)] tabular-nums leading-none">000</p>
+      </div>
+    </div>
+
+    <div class="cursor" aria-hidden="true"><span></span></div>
+
+    <slot />
+
+    <script>
+      import "@/scripts/motion";
+    </script>
+  </body>
+</html>
